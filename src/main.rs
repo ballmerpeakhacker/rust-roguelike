@@ -53,7 +53,7 @@ fn main() -> rltk::BError {
 
     let (rooms, map) = new_map_rooms_and_corridors();
     gs.ecs.insert(map);
-    let (player_x, player_y) = rooms[0].canter();
+    let (player_x, player_y) = rooms[0].center();
 
     gs.ecs
         .create_entity()
