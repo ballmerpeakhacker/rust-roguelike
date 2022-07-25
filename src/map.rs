@@ -16,16 +16,25 @@ pub struct Map {
     pub height: i32,
     pub revealed_tiles: Vec<bool>,
     pub visible_tiles: Vec<bool>,
+    pub blocked: Vec<bool>,
 }
 
 impl Map {
     fn is_exit_valid(&self, x: i32, y: i32) -> bool {
+        // Is it on the map?
         if x < 1 || x > self.width - 1 || y < 1 || y > self.height - 1 {
             return false;
         }
 
+        // ..if so, is it blocked?
         let idx = self.xy_idx(x, y);
-        self.tiles[idx as usize] != TileType::Wall
+        !self.blocked[idx]
+    }
+
+    pub fn populate_blocked(&mut self) {
+        for (i, tile) in self.tiles.iter_mut().enumerate() {
+            self.blocked[i] = *tile == TileType::Wall;
+        }
     }
 
     pub fn xy_idx(&self, x: i32, y: i32) -> usize {
@@ -67,6 +76,7 @@ impl Map {
             height: 50,
             revealed_tiles: vec![false; 80 * 50],
             visible_tiles: vec![false; 80 * 50],
+            blocked: vec![false; 80 * 50],
         };
 
         const MAX_ROOMS : i32 = 30;
