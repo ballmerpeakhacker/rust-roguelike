@@ -17,6 +17,11 @@ pub fn try_move_player(delta_x: i32, delta_y: i32, ecs: &mut World) {
 
             // Movement happened, so we need to recalculate FOV
             viewshed.dirty = true;
+
+            // Update player position resource, so others can track movement
+            let mut ppos = ecs.write_resource::<Point>();
+            ppos.x = pos.x;
+            ppos.y = pos.y;
         }
     }
 }
