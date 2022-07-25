@@ -57,6 +57,7 @@ fn main() -> rltk::BError {
     gs.ecs.register::<Position>();
     gs.ecs.register::<Renderable>();
     gs.ecs.register::<Player>();
+    gs.ecs.register::<Monster>();
     gs.ecs.register::<Viewshed>();
 
     let map: Map = Map::new_map_rooms_and_corridors();
@@ -90,6 +91,7 @@ fn main() -> rltk::BError {
                 range: 8,
                 dirty: true,
             })
+            .with(Monster{})
             .build();
     }
 
